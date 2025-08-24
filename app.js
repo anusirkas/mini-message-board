@@ -7,6 +7,9 @@ const app = express();
 // Middleware: et lugeda POST body andmeid
 app.use(express.urlencoded({ extended: true }));
 
+// Static failide teenindus (CSS, pildid jne)
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Vaadete seadistus
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
