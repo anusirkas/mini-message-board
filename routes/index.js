@@ -1,21 +1,11 @@
 const express = require('express');
 const router = express.Router();
-
-const messages = [
-  {
-    text: "Hi there!",
-    user: "Amando",
-    added: new Date()
-  },
-  {
-    text: "Hello World!",
-    user: "Charles",
-    added: new Date()
-  }
-];
+const { ObjectId } = require('mongodb');
 
 // GET home page
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+  const db = req.app.locals.db;
+  const messages = await db.collection('messages').find().sort({ added: 1 }).toArray();
   res.render('index', { title: "Mini Message Board", messages });
 });
 
@@ -25,21 +15,27 @@ router.get('/new', (req, res) => {
 });
 
 // POST form submission
-router.post('/new', (req, res) => {
-  const messageUser = req.body.user;
-  const messageText = req.body.text;
-  messages.push({ text: messageText, user: messageUser, added: new Date() });
+router.post('/new', async (req, res) => {
+  const db = req.app.locals.db;
+  const newMsg = {
+    text: req.body.text,
+    user: req.body.user,
+    added: new Date()
+  };
+  await db.collection('messages').insertOne(newMsg);
   res.redirect('/');
 });
 
 // GET üksiku sõnumi detailid
-router.get('/message/:id', (req, res) => {
-  const id = req.params.id;
-  const message = messages[id];
-  if (!message) {
-    return res.status(404).send("Message not found");
+router.get('/message/:id', async (req, res) => {
+  const db = req.app.locals.db;
+  try {
+    const message = await db.collection('messages').findOne({ _id: new ObjectId(req.params.id) });
+    if (!message) return res.status(404).send("Message not found");
+    res.render('message', { title: "Message Detail", message });
+  } catch (err) {
+    res.status(400).send("Invalid message ID");
   }
-  res.render('message', { title: "Message Detail", message });
 });
 
 module.exports = router;
