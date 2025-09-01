@@ -15,18 +15,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-// Avatar värvid globaalseks (saadaval igas vaates)
+// Avatar colors global (available in every view)
 app.locals.avatarColors = [
-  "#4f46e5", // sinine
-  "#16a34a", // roheline
-  "#dc2626", // punane
-  "#9333ea", // lilla
-  "#eab308", // kollane
-  "#0ea5e9", // helesinine
-  "#f97316"  // oranž
+  "#4f46e5",
+  "#16a34a",
+  "#dc2626",
+  "#9333ea",
+  "#eab308",
+  "#0ea5e9",
+  "#f97316"
 ];
 
-// --- Mongo ühendus ---
+// Mongo connection
 const { ObjectId } = require('mongodb');
 const client = new MongoClient(process.env.MONGODB_URI);
 

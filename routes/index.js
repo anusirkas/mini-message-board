@@ -26,7 +26,7 @@ router.post('/new', async (req, res) => {
   res.redirect('/');
 });
 
-// GET üksiku sõnumi detailid
+// GET details from one message
 router.get('/message/:id', async (req, res) => {
   const db = req.app.locals.db;
   try {
