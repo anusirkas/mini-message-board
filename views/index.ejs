@@ -42,5 +42,14 @@
 
   <a href="/new" class="floating-button">Send message</a>
   <script src="/theme.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const msgList = document.querySelector(".messages");
+      if (msgList) {
+        msgList.scrollTop = msgList.scrollHeight;
+      }
+    });
+  </script>
+
 </body>
 </html>

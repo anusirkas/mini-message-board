@@ -7,28 +7,29 @@ body {
   align-items: center;
   margin: 0;
   padding: 0;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 /* no title – chat vibe */
-.board-container h1 {
-  display: none;
-}
-
-/* message list */
-ul.messages {
+.board-container {
+  flex: 1; /* võtab kogu ülejäänud ruumi */
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  max-height: 75vh;
+  justify-content: flex-start;
+}
+/* message list */
+
+ul.messages {
+  flex: 1;
   overflow-y: auto;
   padding: 0;
   margin: 20px auto;
   width: 90%;
   max-width: 700px;
   list-style: none;
+  scroll-behavior: smooth;
+  padding-bottom: 80px; /* ⬅️ lisab ruumi nupu jaoks */
 }
-
 .message-item {
   display: flex;
   align-items: flex-start;
@@ -289,3 +290,4 @@ body.dark .emoji-picker {
 
 body.dark .emoji {
   color: #f1f5f9; /* the emoji itself remains bright */
+}
